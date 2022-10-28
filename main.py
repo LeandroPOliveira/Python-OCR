@@ -106,10 +106,28 @@ def main():
 
                 # Finally, write the processed text to the file.
 
-                for linha in text:
+                for index, linha in enumerate(text):
+                    data = re.findall(r'\d{2}\/\d{2}\/\d{4}', linha)
+                    # print(linha)
                     if 'VALOR TOTAL DA NOTA' in linha.upper() or 'VALOR TOTAL DO SERV' in linha.upper():
                         num = re.findall(r'\d.+', linha)
                         print(num)
+                    if 'CNPJ' in linha:
+                        cnpj = re.findall(r'\d.+', linha)
+                        print(cnpj)
+                    if 'RAZAO SOCIAL' in linha.upper():
+                        razao = re.findall(r':.+', linha)
+                        print(razao[0].replace(':', '').strip())
+                    if 'PREFEITURA' in linha.upper():
+                        nota = re.findall(r'\d.+', linha)
+                        print(nota)
+                    if 'MUNICIPIO DE' in linha.upper():
+                        municipio = linha.split(' ')[-2:]
+                        print(municipio)
+                    if 'CODIGO DO SERVICO' in linha.upper():
+                        cod_serv = text[index+2][:4]
+                        print(cod_serv)
+
 
         # At the end of the with .. output_file block
         # the file is closed after writing all the text.
